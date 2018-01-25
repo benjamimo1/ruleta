@@ -16,7 +16,9 @@ class App(QWidget):
 		self.orientacion = 0
 		self.girando = False
 		self.contador = 0
-		self.cancion = QSound("/Users/benjamimo1/Desktop/Ruleta/audio2.wav", self)  
+		self.canciones = [
+		QSound("/Users/benjamimo1/Desktop/Ruleta/audio2.wav", self),
+		QSound("/Users/benjamimo1/Desktop/Ruleta/audio3.wav", self) ]
 		self.initUI()
 
 	def girar(self):
@@ -24,27 +26,29 @@ class App(QWidget):
 		#Aca especifico pesos del random
 
 		#self.orientacion+= 10
-		#transform = (QTransform().rotate(self.orientacion))
+		#transform = (QTransform().rotate(self.orientacion)
 		#aux = self.pixmap.copy().transformed(transform)
 		#self.label.setPixmap(aux)
 
 		self.contador = randint(35,45)
 		self.orientacion = 0
-		self.cancion.play()
+		self.canciones[0].play()
 
 		while self.contador>0:
 			if self.orientacion == 19:
 				self.orientacion = -1
 			self.orientacion+=1
 			aux = self.imagenes[self.orientacion]
-			self.label.setPixmap(aux.scaledToHeight(300))
+			self.label.setPixmap(aux.scaledToHeight(400))
 			print(self.orientacion)
 			if self.contador>10:
 				QTest.qWait(75)
 			else:
 				QTest.qWait(90)
 			self.contador-=1
-		self.cancion.stop()
+		self.canciones[0].stop()
+		self.canciones[1].play()
+
 		
 
 	def initUI(self):
@@ -63,12 +67,12 @@ class App(QWidget):
 		for i in range(20):
 			rect = QRect(0 + 512 * i, 0, 512, 512)
 			circulo = self.sprite.copy(rect)
-			imagen = circulo.scaledToHeight(256)
+			imagen = circulo.scaledToHeight(400)
 			self.imagenes.append(imagen)
 
 
 		self.label = QLabel(self)
-		self.label.setPixmap(self.imagenes[self.orientacion].scaledToHeight(300))
+		self.label.setPixmap(self.imagenes[self.orientacion].scaledToHeight(400))
 
 		self.boton = QPushButton("Boton", self)
 		self.boton.move(600, 600)
@@ -76,13 +80,13 @@ class App(QWidget):
 
 		self.fondo = QLabel(self)
 		self.fondo.setPixmap(QPixmap("/Users/benjamimo1/Desktop/Ruleta/table.jpg"))
-		self.fondo.setGeometry(0, 0, 400, 400)
+		#self.fondo.setGeometry(0, 0, 400, 400)
 		self.fondo.lower()
 
 		self.triangulo = QLabel(self)
-		self.triangulo.setPixmap(QPixmap("/Users/benjamimo1/Desktop/Ruleta/triangulo.png").scaledToHeight(100))
-		self.triangulo.move(100, 100)
-
+		self.triangulo.setPixmap(QPixmap("/Users/benjamimo1/Desktop/Ruleta/triangulo.png").scaledToHeight(50))
+		self.triangulo.move(200, 80)
+		self.triangulo.raise_()
 
 		self.layout = QGridLayout()
 		self.layout.addWidget(self.fondo, 0,0)
