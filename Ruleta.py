@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from random import random, randint
 from math import sqrt
+from PyQt5.QtMultimedia import QSound
 from PyQt5.QtTest import QTest
 
  
@@ -15,7 +16,8 @@ class App(QWidget):
 		self.orientacion = 0
 		self.girando = False
 		self.contador = 0
-		self.initUI()	
+		self.cancion = QSound("/Users/benjamimo1/Desktop/Ruleta/audio2.wav", self)  
+		self.initUI()
 
 	def girar(self):
 
@@ -26,8 +28,9 @@ class App(QWidget):
 		#aux = self.pixmap.copy().transformed(transform)
 		#self.label.setPixmap(aux)
 
-		self.contador = randint(20,30)
+		self.contador = randint(35,45)
 		self.orientacion = 0
+		self.cancion.play()
 
 		while self.contador>0:
 			if self.orientacion == 19:
@@ -41,6 +44,7 @@ class App(QWidget):
 			else:
 				QTest.qWait(90)
 			self.contador-=1
+		self.cancion.stop()
 		
 
 	def initUI(self):
@@ -80,7 +84,6 @@ class App(QWidget):
 		self.triangulo.move(100, 100)
 
 
-
 		self.layout = QGridLayout()
 		self.layout.addWidget(self.fondo, 0,0)
 		self.layout.addWidget(self.label, 0, 0)
@@ -89,6 +92,7 @@ class App(QWidget):
 
 		self.setLayout(self.layout)
 		self.show()
+		
 
 if __name__ == '__main__':
 	app = QApplication(sys.argv)
