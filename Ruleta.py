@@ -75,10 +75,17 @@ class App(QWidget):
 		self.fondo.setGeometry(0, 0, 400, 400)
 		self.fondo.lower()
 
+		self.triangulo = QLabel(self)
+		self.triangulo.setPixmap(QPixmap("/Users/benjamimo1/Desktop/Ruleta/triangulo.png").scaledToHeight(100))
+		self.triangulo.move(100, 100)
+
+
+
 		self.layout = QGridLayout()
 		self.layout.addWidget(self.fondo, 0,0)
 		self.layout.addWidget(self.label, 0, 0)
 		self.layout.addWidget(self.boton, 1,0 )
+		
 
 		self.setLayout(self.layout)
 		self.show()
