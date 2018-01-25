@@ -34,7 +34,7 @@ class App(QWidget):
 				self.orientacion = -1
 			self.orientacion+=1
 			aux = self.imagenes[self.orientacion]
-			self.label.setPixmap(aux)
+			self.label.setPixmap(aux.scaledToHeight(300))
 			print(self.orientacion)
 			if self.contador>10:
 				QTest.qWait(75)
@@ -64,7 +64,7 @@ class App(QWidget):
 
 
 		self.label = QLabel(self)
-		self.label.setPixmap(self.imagenes[self.orientacion])
+		self.label.setPixmap(self.imagenes[self.orientacion].scaledToHeight(300))
 
 		self.boton = QPushButton("Boton", self)
 		self.boton.move(600, 600)
