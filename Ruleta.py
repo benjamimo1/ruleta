@@ -14,6 +14,7 @@ class App(QWidget):
 		self.title = 'Ruleta!'
 		self.orientacion = 0
 		self.girando = False
+		self.contador = 0
 		self.initUI()	
 
 	def girar(self):
@@ -25,19 +26,21 @@ class App(QWidget):
 		#aux = self.pixmap.copy().transformed(transform)
 		#self.label.setPixmap(aux)
 
-		if self.girando:
-			self.girando=False
-		else:
-			self.girando=True
+		self.contador = randint(20,30)
+		self.orientacion = 0
 
-		while self.girando:
+		while self.contador>0:
 			if self.orientacion == 19:
 				self.orientacion = -1
 			self.orientacion+=1
 			aux = self.imagenes[self.orientacion]
 			self.label.setPixmap(aux)
 			print(self.orientacion)
-			QTest.qWait(100)
+			if self.contador>10:
+				QTest.qWait(75)
+			else:
+				QTest.qWait(90)
+			self.contador-=1
 		
 
 	def initUI(self):
