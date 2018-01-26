@@ -7,6 +7,19 @@ from math import sqrt
 from PyQt5.QtMultimedia import QSound
 from PyQt5.QtTest import QTest
 
+class Second(QMainWindow):
+	def __init__(self, parent=None):
+		super(Second, self).__init__(parent)
+
+		self.anuncio = QLabel(self)
+		self.anuncio.setText("Tu premio es:")
+		self.anuncio.show()
+
+		self.imagenPremio = QLabel(self)
+		self.imagenPremio.setScaledContents(True)
+		self.imagenPremio.setPixmap(QPixmap("/Users/benjamimo1/Desktop/Ruleta/bolsa.png"))
+		self.imagenPremio.setGeometry(QRect(0, 40, 125, 125))
+		self.setFixedSize(250,250)
 
  
 class App(QWidget):
@@ -17,7 +30,7 @@ class App(QWidget):
 		self.orientacion = 0
 		self.girando = False
 		self.contador = 0
-		self.premios = ["Llavero tipo Casco","Bolsa ecológica","Reposa cabeza"]
+		self.premios = ["casco","bolsa","reposa"]
 		self.canciones = [
 		QSound("/Users/benjamimo1/Desktop/Ruleta/audio4.wav", self),
 		QSound("/Users/benjamimo1/Desktop/Ruleta/audio3.wav", self) ]
@@ -25,6 +38,7 @@ class App(QWidget):
 
 	def girar(self):
 		
+		self.dialog.hide()
 		#resultados simulacion {'llavero': 301, 'bolsa': 98, 'reposa': 101}
 		self.orientacion = 5
 		self.contador = randint(60,100)
@@ -61,6 +75,10 @@ class App(QWidget):
 			premio = self.premios[2]
 
 		print("Ha salido {}".format(premio))
+		#self.anuncio.setText("Tu premio es:\n{}".format(premio))
+
+		self.dialog.imagenPremio.setPixmap(QPixmap("/Users/benjamimo1/Desktop/Ruleta/{}.png".format(premio)))
+		self.dialog.show()
 
 
 
@@ -79,7 +97,6 @@ class App(QWidget):
 		self.label.setMinimumSize(self.label.pixmap().height()*sqrt(2), self.label.pixmap().height()*sqrt(2))
 
 		self.boton = QPushButton("A Jugar!", self)
-		self.boton.move(600, 600)
 		self.boton.clicked.connect(self.girar)
 
 		self.logo = QLabel(self)
@@ -91,8 +108,9 @@ class App(QWidget):
 		self.triangulo.move(440, 130)
 		self.triangulo.raise_()
 
+		self.dialog = Second(self)
+
 		self.layout = QGridLayout()
-		#self.layout.addWidget(self.fondo, 0,0)
 		self.layout.addWidget(self.label, 0, 0)
 		self.layout.addWidget(self.logo, 1, 0)
 		self.layout.addWidget(self.boton, 2,0 )
