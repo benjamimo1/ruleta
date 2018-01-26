@@ -105,3 +105,5 @@ if __name__ == '__main__':
 		sys.exit(app.exec_())
 	except Exception as err:
 		print(str(err))
+
+#pyinstaller.exe --onefile --windowed app.py

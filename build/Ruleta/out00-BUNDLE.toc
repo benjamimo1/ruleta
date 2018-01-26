@@ -1,0 +1,1 @@
+([('Ruleta', '/Users/benjamimo1/Desktop/Ruleta/dist/Ruleta', 'EXECUTABLE')],)
