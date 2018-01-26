@@ -17,7 +17,7 @@ class App(QWidget):
 		self.girando = False
 		self.contador = 0
 		self.canciones = [
-		QSound("/Users/benjamimo1/Desktop/Ruleta/audio2.wav", self),
+		QSound("/Users/benjamimo1/Desktop/Ruleta/audio4.wav", self),
 		QSound("/Users/benjamimo1/Desktop/Ruleta/audio3.wav", self) ]
 		self.initUI()
 
@@ -25,19 +25,41 @@ class App(QWidget):
 
 		#Aca especifico pesos del random
 
-		self.orientacion+= 10
-		transform = (QTransform().rotate(self.orientacion))
-		aux = self.pixmap.copy().transformed(transform)
-		self.label.setPixmap(aux)
-
 		
+		self.orientacion = 0
+		self.contador = randint(60,100)
+		self.canciones[0].play()
+
+		while self.contador>0:
+			print(self.orientacion)
+			self.orientacion+= 9
+			transform = (QTransform().rotate(self.orientacion))
+			aux = self.pixmap.copy().transformed(transform)
+			self.label.setPixmap(aux)
+
+			if self.contador>20:  #Desaceleracion
+				QTest.qWait(45)
+
+			elif self.contador>10:
+				QTest.qWait(65)
+
+			else:
+				QTest.qWait(90)
+
+			self.contador-=1
+
+		self.canciones[0].stop()
+		self.canciones[1].play()
+
+		print((self.orientacion%360)//36+1)
+
 
 	def initUI(self):
 		self.setWindowTitle(self.title)
 
 		# Create widget
 		self.label = QLabel(self)
-		self.pixmap = QPixmap('/Users/benjamimo1/Desktop/Ruleta/wheel.png')
+		self.pixmap = QPixmap('/Users/benjamimo1/Desktop/Ruleta/ruletaColor.png')
 		diag = (self.pixmap.width()**2 + self.pixmap.height()**2)**0.5
 		self.label.setAlignment(Qt.AlignCenter)
 		self.label.setPixmap(self.pixmap)
@@ -49,18 +71,18 @@ class App(QWidget):
 		self.boton.move(600, 600)
 		self.boton.clicked.connect(self.girar)
 
-		self.fondo = QLabel(self)
-		self.fondo.setPixmap(QPixmap("/Users/benjamimo1/Desktop/Ruleta/table.jpg"))
-		#self.fondo.setGeometry(0, 0, 400, 400)
-		self.fondo.lower()
+		self.logo = QLabel(self)
+		self.logoPixmap = QPixmap('/Users/benjamimo1/Desktop/Ruleta/logo.JPG')
+		self.logo.setPixmap(self.logoPixmap.scaledToHeight(100))
 
 		self.layout = QGridLayout()
-		self.layout.addWidget(self.fondo, 0,0)
+		#self.layout.addWidget(self.fondo, 0,0)
 		self.layout.addWidget(self.label, 0, 0)
-		self.layout.addWidget(self.boton, 1,0 )
+		self.layout.addWidget(self.logo, 1, 0)
+		self.layout.addWidget(self.boton, 2,0 )
 		
-
 		self.setLayout(self.layout)
+
 		self.show()
 		
 
