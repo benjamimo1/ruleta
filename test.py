@@ -19,7 +19,7 @@ class Second(QMainWindow):
 		self.imagenPremio = QLabel(self)
 		self.imagenPremio.setScaledContents(True)
 		self.imagenPremio.setPixmap(QPixmap("/Users/benjamimo1/Desktop/Ruleta/bolsa.png"))
-		self.imagenPremio.setGeometry(QRect(0, 40, 125, 125))
+		self.imagenPremio.setGeometry(QRect(60, 40, 125, 125))
 
 		appStyle="""
 QMainWindow{
@@ -168,4 +168,4 @@ if __name__ == '__main__':
 	except Exception as err:
 		print(str(err))
 
-#pyinstaller.exe --onefile --windowed app.py
+#pyinstaller --onefile --windowed test.py
