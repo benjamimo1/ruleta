@@ -8,6 +8,7 @@ from PyQt5.QtMultimedia import QSound
 from PyQt5.QtTest import QTest
 
 class Second(QMainWindow):
+
 	def __init__(self, parent=None):
 		super(Second, self).__init__(parent)
 
@@ -19,13 +20,28 @@ class Second(QMainWindow):
 		self.imagenPremio.setScaledContents(True)
 		self.imagenPremio.setPixmap(QPixmap("/Users/benjamimo1/Desktop/Ruleta/bolsa.png"))
 		self.imagenPremio.setGeometry(QRect(0, 40, 125, 125))
-		self.setFixedSize(250,250)
 
+		appStyle="""
+QMainWindow{
+background-color: darkgray;
+}
+"""
+
+		self.setFixedSize(250,250)
+		self.setStyleSheet(appStyle)
+
+		self.etiqueta = QLabel(self)
+		newfont = QFont("Helvetica", 20, QFont.Bold) 
+		self.etiqueta.setFont(newfont)
+		self.etiqueta.move(0,200)
+		self.etiqueta.resize(200,25)
+		
  
 class App(QWidget):
  
 	def __init__(self):
 		super().__init__()
+
 		self.title = 'Ruleta!'
 		self.orientacion = 0
 		self.girando = False
@@ -67,17 +83,40 @@ class App(QWidget):
 
 		valor_final = (self.orientacion%360)//36+1
 
-		if valor_final <=6:
+
+		#Probabilidades via segmentos del circulo
+		#if valor_final <=6:
+		#	premio = self.premios[0]
+		#elif valor_final <=8:
+		#	premio = self.premios[1]
+		#elif valor_final <=10:
+		#	premio = self.premios[2]
+
+		#Probabilidades forzadas sorpresa
+
+		valor_final = random()
+
+		if valor_final <= 280/480:
 			premio = self.premios[0]
-		elif valor_final <=8:
+		elif valor_final <= 380/480:
 			premio = self.premios[1]
-		elif valor_final <=10:
+		elif valor_final <=480/480:
 			premio = self.premios[2]
+
 
 		print("Ha salido {}".format(premio))
 		#self.anuncio.setText("Tu premio es:\n{}".format(premio))
 
 		self.dialog.imagenPremio.setPixmap(QPixmap("/Users/benjamimo1/Desktop/Ruleta/{}.png".format(premio)))
+
+		if premio == "bolsa":
+			nombre = "Bolsa ecológica"
+		if premio == "reposa":
+			nombre = "Reposa cabeza"
+		if premio == "casco":
+			nombre = "Llavero de casco"
+
+		self.dialog.etiqueta.setText(nombre)
 		self.dialog.show()
 
 
@@ -121,7 +160,6 @@ class App(QWidget):
 		self.show()
 
 		
-
 if __name__ == '__main__':
 	app = QApplication(sys.argv)
 	ex = App()
